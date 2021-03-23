@@ -1,6 +1,11 @@
 #include <iostream>
+#include "State.h"
+
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+    State a(0);
+    State b(1);
+
     return 0;
 }

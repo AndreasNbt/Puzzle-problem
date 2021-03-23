@@ -3,4 +3,4 @@ project(_)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(_ main.cpp)
+add_executable(_ main.cpp State.cpp State.h)
