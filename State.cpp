@@ -13,6 +13,10 @@ State::State(bool isFinal) {
    for (int i=0;i<WIDTH;i++)
        for (int j=0;j<HEIGHT;j++) {
            puzzle2d[i][j] = puzzle1d[i*WIDTH + j];
+           if (puzzle2d[i][j] == 0) {
+               bX = i;
+               bY = j;
+           }
        }
    printPuzzle();
 }
