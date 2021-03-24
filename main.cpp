@@ -4,8 +4,18 @@
 
 int main() {
 
-    State a(0);
-    State b(1);
+    State a;
 
+
+
+    bool c = a.isFinal();
+    std::cout << c << "\n";
+
+
+
+
+   // State child;
+    //b.goUp(child);
+   // child.printPuzzle();
     return 0;
 }

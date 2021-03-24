@@ -8,15 +8,31 @@
 
 class State {
     public:
-        explicit State(bool isFinal);
+        State();
+        State(int **puzzle,int x, int y);
+        State(State& other);
+        [[nodiscard]] int getbX() const;
+        [[nodiscard]] int getbY() const;
+        int** getPuzzle2D();
+        State* getPrev();
+        std::string getActionName();
+        void setbX(int x);
+        void setbY(int y);
+        void setPrev(State*);
+        void setActionName(std::string name);
+        bool goUp(State&);
+        bool goRight(State&);
+        bool goLeft(State&);
+        bool goDown(State&);
+        void swapPieces(int x1, int y1, int x2, int y2);
+        bool isFinal();
     private:
-        int puzzle1d[WIDTH*HEIGHT];
-        int puzzle2d[WIDTH][HEIGHT];
+        int **puzzle2d;
         int bX, bY;
-        State *prev;
+        State *prev{};
         std::string actionName;
 
-    private:
+    public:
         void printPuzzle();
 
 };

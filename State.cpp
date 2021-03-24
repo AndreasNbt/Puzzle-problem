@@ -2,14 +2,17 @@
 
 #include <random>
 
-State::State(bool isFinal) {
+State::State() {
+    int puzzle1d[WIDTH*HEIGHT];
    for (int i=0;i<WIDTH*HEIGHT-1;i++)
        puzzle1d[i] = i+1;
    puzzle1d[WIDTH*HEIGHT-1] = 0;
 
-   if (!isFinal)
-       std::shuffle(std::begin(puzzle1d),std::end(puzzle1d), std::mt19937(std::random_device()()));
+   std::shuffle(std::begin(puzzle1d),std::end(puzzle1d), std::mt19937(std::random_device()()));
 
+   puzzle2d = new int*[WIDTH];
+   for (int i=0;i<WIDTH;i++)
+       puzzle2d[i] = new int[HEIGHT];
    for (int i=0;i<WIDTH;i++)
        for (int j=0;j<HEIGHT;j++) {
            puzzle2d[i][j] = puzzle1d[i*WIDTH + j];
@@ -18,8 +21,14 @@ State::State(bool isFinal) {
                bY = j;
            }
        }
-   printPuzzle();
 }
+
+State::State(int **puzzle, int x, int y) {
+    puzzle2d = puzzle;
+    bX = x;
+    bY = y;
+}
+
 
 void State::printPuzzle() {
     for (int i=0;i<WIDTH;i++) {
@@ -28,4 +37,122 @@ void State::printPuzzle() {
         }
         std::cout << "\n";
     }
+}
+
+int State::getbX() const {
+    return bX;
+}
+
+int State::getbY() const {
+
+    return bY;
+}
+
+State *State::getPrev() {
+    return prev;
+}
+
+std::string State::getActionName() {
+    return actionName;
+}
+
+void State::setbX(int x) {
+    bX = x;
+}
+
+void State::setbY(int y) {
+    bY = y;
+}
+
+void State::setPrev(State *s) {
+    prev = s;
+}
+
+void State::setActionName(std::string name) {
+    actionName = name;
+}
+
+void State::swapPieces(int x1, int y1, int x2, int y2) {
+    int temp = puzzle2d[x1][y1];
+    puzzle2d[x1][y1] = puzzle2d[x2][y2];
+    puzzle2d[x2][y2] = temp;
+}
+State::State(State& other) {
+    this->bX = other.getbX();
+    this->bY = other.getbY();
+    this->prev = other.getPrev();
+    this->actionName = other.getActionName();
+    this->puzzle2d = other.getPuzzle2D();
+}
+
+int **State::getPuzzle2D() {
+    return puzzle2d;
+}
+
+bool State::goUp(State &s) {
+
+    if (bX > 0) {
+        s = *this;
+        s.swapPieces(bX, bY, bX - 1, bY);
+        s.setbX(bX-1);
+        s.setActionName("Up");
+        s.setPrev(this);
+        return true;
+    }
+    return false;
+
+}
+
+bool State::goRight(State &s) {
+
+    if (bY < WIDTH - 1) {
+        s = *this;
+        s.swapPieces(bX, bY, bX , bY+1);
+        s.setbY(bY+1);
+        s.setActionName("Right");
+        s.setPrev(this);
+        return true;
+    }
+    return false;
+
+}
+
+bool State::goLeft(State &s) {
+
+    if (bY > 0) {
+        s = *this;
+        s.swapPieces(bX, bY, bX, bY-1);
+        s.setbY(bY-1);
+        s.setActionName("Left");
+        s.setPrev(this);
+        return true;
+    }
+    return false;
+
+}
+
+bool State::goDown(State &s) {
+
+    if (bX < HEIGHT-1) {
+        s = *this;
+        s.swapPieces(bX, bY, bX + 1, bY);
+        s.setbX(bX+1);
+        s.setActionName("Down");
+        s.setPrev(this);
+        return true;
+    }
+    return false;
+
+}
+
+bool State::isFinal() {
+    bool flag = true;
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            if (puzzle2d[i][j] != (i*WIDTH + j + 1) && (i!=WIDTH-1 && j!=HEIGHT-1))
+                flag = false;
+    if (puzzle2d[WIDTH-1][HEIGHT-1])
+        flag = false;
+    return flag;
+
 }
