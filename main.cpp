@@ -6,16 +6,18 @@ int main() {
 
     State a;
 
+    a.printPuzzle();
+    std::cout << "==========" << std::endl;
+    State child;
+    a.goLeft(child);
+    child.printPuzzle();
+    std::cout << "==========" << std::endl;
+    a.printPuzzle();
+    std::cout << "==========" << std::endl;
+    a.goRight(child);
+    child.printPuzzle();
+    std::cout << "==========" << std::endl;
+    a.printPuzzle();
 
-
-    bool c = a.isFinal();
-    std::cout << c << "\n";
-
-
-
-
-   // State child;
-    //b.goUp(child);
-   // child.printPuzzle();
     return 0;
 }

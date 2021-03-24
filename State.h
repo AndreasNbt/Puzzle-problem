@@ -11,11 +11,12 @@ class State {
         State();
         State(int **puzzle,int x, int y);
         State(State& other);
+        State& operator=(const State& other);
         [[nodiscard]] int getbX() const;
         [[nodiscard]] int getbY() const;
-        int** getPuzzle2D();
-        State* getPrev();
-        std::string getActionName();
+        [[nodiscard]] int** getPuzzle2D() const;
+        [[nodiscard]] State* getPrev() const;
+        [[nodiscard]] std::string getActionName() const;
         void setbX(int x);
         void setbY(int y);
         void setPrev(State*);
@@ -24,6 +25,7 @@ class State {
         bool goRight(State&);
         bool goLeft(State&);
         bool goDown(State&);
+        [[nodiscard]] int getPuzzlePiece(int x,int y) const;
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();
     private:

@@ -48,12 +48,16 @@ int State::getbY() const {
     return bY;
 }
 
-State *State::getPrev() {
+State *State::getPrev() const {
     return prev;
 }
 
-std::string State::getActionName() {
+std::string State::getActionName() const{
     return actionName;
+}
+
+int State::getPuzzlePiece(int x, int y) const {
+    return puzzle2d[x][y];
 }
 
 void State::setbX(int x) {
@@ -82,10 +86,22 @@ State::State(State& other) {
     this->bY = other.getbY();
     this->prev = other.getPrev();
     this->actionName = other.getActionName();
-    this->puzzle2d = other.getPuzzle2D();
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            this->puzzle2d[i][j] = other.getPuzzlePiece(i,j);
 }
 
-int **State::getPuzzle2D() {
+State& State::operator=(const State& other) {
+    this->bX = other.getbX();
+    this->bY = other.getbY();
+    this->prev = other.getPrev();
+    this->actionName = other.getActionName();
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            this->puzzle2d[i][j] = other.getPuzzlePiece(i,j);
+}
+
+int **State::getPuzzle2D() const {
     return puzzle2d;
 }
 
@@ -156,3 +172,5 @@ bool State::isFinal() {
     return flag;
 
 }
+
+
