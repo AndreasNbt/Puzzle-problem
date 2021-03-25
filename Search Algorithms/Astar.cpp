@@ -1,4 +1,6 @@
-//
-// Created by andre on 25/3/2021.
-//
+#include "../State.h"
+
+State* Astar(State *initial, long &examined, long &mem) {
+
+}
 
