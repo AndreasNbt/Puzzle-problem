@@ -10,8 +10,6 @@ State* DFS(State *initial,unsigned long long &examined,unsigned long long &mem) 
     while (!frontier.empty()) {
         State *current = frontier.top();
         frontier.pop();
-        current->printPuzzle();
-        std::cout << "=============" << std::endl;
         if (frontier.size() + closed.size() > mem)
             mem = frontier.size() + closed.size();
         if (std::find(closed.begin(), closed.end(),*current) == closed.end()) {

@@ -21,10 +21,10 @@ State::State() {
        }
 }
 
-State::State(int **puzzle, int x, int y) {
+State::State(const int *puzzle, int x, int y) {
     for (int i=0;i<WIDTH;i++)
         for (int j = 0; j < HEIGHT; j++)
-            puzzle2d[i][j] = puzzle[i][j];
+            puzzle2d[i][j] = puzzle[i*WIDTH+j];
     bX = x;
     bY = y;
 }
@@ -148,8 +148,6 @@ bool State::goDown(State &s) {
 }
 
 bool State::isFinal() {
-    bool flag = true;
-    printPuzzle();
     for (int i=0;i<WIDTH;i++)
         for (int j=0;j<HEIGHT;j++)
             if ((i==WIDTH-1 && j ==HEIGHT-1)) {

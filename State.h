@@ -12,7 +12,7 @@
 class State {
     public:
         State();
-        State(int **puzzle,int x, int y);
+        State(const int *puzzle,int x, int y);
         State(const State&) = default;
         ~State() = default;
         State(State&&) = default;
@@ -35,9 +35,9 @@ class State {
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();
     private:
-        int puzzle2d[WIDTH][HEIGHT];
+        int puzzle2d[WIDTH][HEIGHT]{};
         int bX, bY;
-        State *prev;
+        State *prev{};
         std::string actionName;
 
     public:
