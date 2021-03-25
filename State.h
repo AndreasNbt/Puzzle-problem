@@ -3,19 +3,23 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
+#include <stack>
 
-#define WIDTH 5
-#define HEIGHT 5
+#define WIDTH 3
+#define HEIGHT 3
 
 class State {
     public:
         State();
         State(int **puzzle,int x, int y);
-        State(State& other);
+        State(const State&) = default;
+        ~State() = default;
+        State(State&&) = default;
         State& operator=(const State& other);
+        bool operator==(const State& other);
         [[nodiscard]] int getbX() const;
         [[nodiscard]] int getbY() const;
-        [[nodiscard]] int** getPuzzle2D() const;
         [[nodiscard]] State* getPrev() const;
         [[nodiscard]] std::string getActionName() const;
         void setbX(int x);
@@ -31,9 +35,9 @@ class State {
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();
     private:
-        int **puzzle2d;
+        int puzzle2d[WIDTH][HEIGHT];
         int bX, bY;
-        State *prev{};
+        State *prev;
         std::string actionName;
 
     public:

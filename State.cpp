@@ -11,9 +11,6 @@ State::State() {
 
    std::shuffle(std::begin(puzzle1d),std::end(puzzle1d), std::mt19937(std::random_device()()));
 
-   puzzle2d = new int*[WIDTH];
-   for (int i=0;i<WIDTH;i++)
-       puzzle2d[i] = new int[HEIGHT];
    for (int i=0;i<WIDTH;i++)
        for (int j=0;j<HEIGHT;j++) {
            puzzle2d[i][j] = puzzle1d[i*WIDTH + j];
@@ -25,16 +22,18 @@ State::State() {
 }
 
 State::State(int **puzzle, int x, int y) {
-    puzzle2d = puzzle;
+    for (int i=0;i<WIDTH;i++)
+        for (int j = 0; j < HEIGHT; j++)
+            puzzle2d[i][j] = puzzle[i][j];
     bX = x;
     bY = y;
 }
 
 
 void State::printPuzzle() {
-    for (int i=0;i<WIDTH;i++) {
-        for (int j = 0; j < HEIGHT; j++) {
-            std::cout << puzzle2d[i][j] << " ";
+    for (auto & i : puzzle2d) {
+        for (int j : i) {
+            std::cout << j << " ";
         }
         std::cout << "\n";
     }
@@ -82,18 +81,6 @@ void State::swapPieces(int x1, int y1, int x2, int y2) {
     puzzle2d[x1][y1] = puzzle2d[x2][y2];
     puzzle2d[x2][y2] = temp;
 }
-State::State(State& other) {
-    puzzle2d = new int*[WIDTH];
-    for (int i=0;i<WIDTH;i++)
-        puzzle2d[i] = new int[HEIGHT];
-    this->bX = other.getbX();
-    this->bY = other.getbY();
-    this->prev = other.getPrev();
-    this->actionName = other.getActionName();
-    for (int i=0;i<WIDTH;i++)
-        for (int j=0;j<HEIGHT;j++)
-            this->puzzle2d[i][j] = other.getPuzzlePiece(i,j);
-}
 
 State& State::operator=(const State& other) {
     this->bX = other.getbX();
@@ -103,10 +90,6 @@ State& State::operator=(const State& other) {
     for (int i=0;i<WIDTH;i++)
         for (int j=0;j<HEIGHT;j++)
             this->puzzle2d[i][j] = other.getPuzzlePiece(i,j);
-}
-
-int **State::getPuzzle2D() const {
-    return puzzle2d;
 }
 
 bool State::goUp(State &s) {
@@ -166,13 +149,15 @@ bool State::goDown(State &s) {
 
 bool State::isFinal() {
     bool flag = true;
+    printPuzzle();
     for (int i=0;i<WIDTH;i++)
         for (int j=0;j<HEIGHT;j++)
-            if (puzzle2d[i][j] != (i*WIDTH + j + 1) && (i!=WIDTH-1 && j!=HEIGHT-1))
-                flag = false;
-    if (puzzle2d[WIDTH-1][HEIGHT-1])
-        flag = false;
-    return flag;
+            if ((i==WIDTH-1 && j ==HEIGHT-1)) {
+                if (puzzle2d[i][j] != 0) return false;
+            } else {
+                if (puzzle2d[i][j] != (i*WIDTH + j + 1)) return false;
+            }
+    return true;
 
 }
 
@@ -206,6 +191,16 @@ std::vector<State *> State::expand() {
 
     return children;
 
+}
+
+bool State::operator==(const State &other) {
+    if (bX != other.bX || bY != other.bY)
+        return false;
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            if (puzzle2d[i][j] != other.puzzle2d[i][j])
+                return false;
+    return true;
 }
 
 

@@ -1,6 +1,6 @@
 #include "../State.h"
 
-State* Astar(State *initial, long &examined, long &mem) {
-
+State* Astar(State *initial,unsigned long long &examined,unsigned long long &mem) {
+    return nullptr;
 }
 

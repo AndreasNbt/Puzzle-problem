@@ -1,5 +1,5 @@
 #include "../State.h"
 
-State* BFS(State *initial, long &examined, long &mem) {
-
+State* BFS(State *initial,unsigned long long &examined,unsigned long long &mem) {
+    return nullptr;
 }
