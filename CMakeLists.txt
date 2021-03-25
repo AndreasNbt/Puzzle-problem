@@ -3,4 +3,4 @@ project(_)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(_ main.cpp State.cpp State.h)
+add_executable(_ main.cpp State.cpp State.h "Search Algorithms/DFS.cpp" "Search Algorithms/BFS.cpp" "Search Algorithms/BestFS.cpp" "Search Algorithms/Astar.cpp")

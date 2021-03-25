@@ -2,6 +2,7 @@
 #define __STATE_H
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 #define WIDTH 5
 #define HEIGHT 5
@@ -25,6 +26,7 @@ class State {
         bool goRight(State&);
         bool goLeft(State&);
         bool goDown(State&);
+        std::vector<State *> expand();
         [[nodiscard]] int getPuzzlePiece(int x,int y) const;
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();

@@ -5,19 +5,14 @@
 int main() {
 
     State a;
+    a.printPuzzle();
+    std::vector<State*> p = a.expand();
 
-    a.printPuzzle();
-    std::cout << "==========" << std::endl;
-    State child;
-    a.goLeft(child);
-    child.printPuzzle();
-    std::cout << "==========" << std::endl;
-    a.printPuzzle();
-    std::cout << "==========" << std::endl;
-    a.goRight(child);
-    child.printPuzzle();
-    std::cout << "==========" << std::endl;
-    a.printPuzzle();
+
+    for (State* s : p) {
+       s->printPuzzle();
+        std::cout << "=========" << std::endl;
+    }
 
     return 0;
 }

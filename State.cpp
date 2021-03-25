@@ -2,6 +2,7 @@
 
 #include <random>
 
+
 State::State() {
     int puzzle1d[WIDTH*HEIGHT];
    for (int i=0;i<WIDTH*HEIGHT-1;i++)
@@ -73,7 +74,7 @@ void State::setPrev(State *s) {
 }
 
 void State::setActionName(std::string name) {
-    actionName = name;
+    actionName = std::move(name);
 }
 
 void State::swapPieces(int x1, int y1, int x2, int y2) {
@@ -82,6 +83,9 @@ void State::swapPieces(int x1, int y1, int x2, int y2) {
     puzzle2d[x2][y2] = temp;
 }
 State::State(State& other) {
+    puzzle2d = new int*[WIDTH];
+    for (int i=0;i<WIDTH;i++)
+        puzzle2d[i] = new int[HEIGHT];
     this->bX = other.getbX();
     this->bY = other.getbY();
     this->prev = other.getPrev();
@@ -106,7 +110,6 @@ int **State::getPuzzle2D() const {
 }
 
 bool State::goUp(State &s) {
-
     if (bX > 0) {
         s = *this;
         s.swapPieces(bX, bY, bX - 1, bY);
@@ -170,6 +173,38 @@ bool State::isFinal() {
     if (puzzle2d[WIDTH-1][HEIGHT-1])
         flag = false;
     return flag;
+
+}
+
+std::vector<State *> State::expand() {
+
+    std::vector<State *> children;
+    State *child;
+
+    child = new State(*this);
+
+
+    if (goUp(*child)) {
+        children.push_back(child);
+    }
+    else delete child;
+
+    child = new State(*this);
+    if (goRight(*child))
+        children.push_back(child);
+    else delete child;
+
+    child = new State(*this);
+    if (goLeft(*child))
+        children.push_back(child);
+    else delete child;
+
+    child = new State(*this);
+    if (goDown(*child))
+        children.push_back(child);
+    else delete child;
+
+    return children;
 
 }
 
