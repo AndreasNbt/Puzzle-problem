@@ -15,7 +15,17 @@ int main() {
     std::cout << a->isFinal() << std::endl;
     unsigned long long examined;
     unsigned long long mem;
-    State *c = DFS(a,examined,mem);
-    std::cout << examined;
+    //State *c = DFS(a,examined,mem);
 
+    State *d = BFS(a, examined, mem);
+   // c->printPuzzle();
+   // std::cout << c->isFinal();
+
+   if (d) {
+       std::cout << "Solution found \n";
+       d->printPuzzle();
+       d->isFinal();
+   }
+   else
+       std::cout << "Fuck my life\n";
 }

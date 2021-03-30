@@ -173,18 +173,21 @@ std::vector<State *> State::expand() {
     else delete child;
 
     child = new State(*this);
-    if (goRight(*child))
+    if (goRight(*child)) {
         children.push_back(child);
+    }
     else delete child;
 
     child = new State(*this);
-    if (goLeft(*child))
+    if (goLeft(*child)) {
         children.push_back(child);
+    }
     else delete child;
 
     child = new State(*this);
-    if (goDown(*child))
+    if (goDown(*child)) {
         children.push_back(child);
+    }
     else delete child;
 
     return children;
@@ -199,6 +202,14 @@ bool State::operator==(const State &other) {
             if (puzzle2d[i][j] != other.puzzle2d[i][j])
                 return false;
     return true;
+}
+
+long int State::getKey() const {
+    long int k = bX * 1000 + bY *10;
+    for (int i = 0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            k += puzzle2d[i][j] + i*WIDTH + j +1;
+    return k;
 }
 
 

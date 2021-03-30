@@ -5,6 +5,7 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <unordered_map>
 
 #define WIDTH 3
 #define HEIGHT 3
@@ -34,6 +35,7 @@ class State {
         [[nodiscard]] int getPuzzlePiece(int x,int y) const;
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();
+        [[nodiscard]] long int getKey() const;
     private:
         int puzzle2d[WIDTH][HEIGHT]{};
         int bX, bY;
