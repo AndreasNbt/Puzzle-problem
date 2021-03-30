@@ -1,6 +1,7 @@
 #include "State.h"
 
 #include <random>
+#include <math.h>
 
 
 State::State() {
@@ -19,6 +20,8 @@ State::State() {
                bY = j;
            }
        }
+   setPrev(nullptr);
+   setActionName("");
 }
 
 State::State(const int *puzzle, int x, int y) {
@@ -27,6 +30,8 @@ State::State(const int *puzzle, int x, int y) {
             puzzle2d[i][j] = puzzle[i*WIDTH+j];
     bX = x;
     bY = y;
+    setPrev(nullptr);
+    setActionName("");
 }
 
 
@@ -206,10 +211,60 @@ bool State::operator==(const State &other) {
 
 long int State::getKey() const {
     long int k = bX * 1000 + bY *10;
-    for (int i = 0;i<WIDTH;i++)
-        for (int j=0;j<HEIGHT;j++)
-            k += puzzle2d[i][j] + i*WIDTH + j +1;
+    for (int i = 0;i<WIDTH;i++) {
+        int t = 1;
+        for (int j = 0; j < HEIGHT; j++) {
+            k += (puzzle2d[i][j] * t);
+            t *= 10;
+        }
+    }
     return k;
 }
+
+int State::getDepth() {
+    int depth = 0;
+    State *p =  this;
+    while (p != nullptr) {
+        depth ++;
+        p = p->prev;
+    }
+    return depth;
+}
+
+int State::heuristic() {
+    int mDistance = 0;
+    int correctPieces = 0;
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++) {
+            int x,y;
+            if ((i!=WIDTH-1) && (j!=HEIGHT-1))
+                find(i*WIDTH + j + 1, x , y);
+            if (puzzle2d[i][j] == i*WIDTH + j + 1) correctPieces++;
+            else {
+                x = bX;
+                y = bY;
+                if (!puzzle2d[i][j]) correctPieces++;
+            }
+            mDistance += sqrt((i-x)*(i-x) + (j-y)*(j-y));
+        }
+    return mDistance - correctPieces;
+}
+
+int State::getHvalue() const {
+    return Hvalue;
+}
+
+void State::setHvalue(int value) {
+    Hvalue = value;
+}
+
+void State::find(int value, int &x, int &y) {
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            if (puzzle2d[i][j] == value) {
+                x = i;
+                y = j;
+            }
+    }
 
 

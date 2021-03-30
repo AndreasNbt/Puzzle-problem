@@ -1,6 +1,6 @@
 #include <iostream>
 #include "State.h"
-
+#include "Timer.h"
 
 State* DFS(State *initial,unsigned long long &examined,unsigned long long &mem);
 State* BFS(State *initial,unsigned long long &examined,unsigned long long &mem);
@@ -12,20 +12,38 @@ int main() {
 
     int b[WIDTH*HEIGHT] = {3,6,0,1,4,2,7,5,8};
     auto *a = new State(b,0,2);
-    std::cout << a->isFinal() << std::endl;
+
     unsigned long long examined;
     unsigned long long mem;
-    //State *c = DFS(a,examined,mem);
 
+    Timer timer;
+   /* timer.start();
     State *d = BFS(a, examined, mem);
-   // c->printPuzzle();
-   // std::cout << c->isFinal();
+    timer.stop();
+    double ms = timer.getElapsedMicroSeconds();
 
-   if (d) {
-       std::cout << "Solution found \n";
-       d->printPuzzle();
-       d->isFinal();
-   }
-   else
-       std::cout << "Fuck my life\n";
+
+    if (d!=nullptr) {
+        std::cout << "BFS\n";
+        std::cout << "Solution found with:\n" << "  Solution depth = " << d->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms << " microseconds." <<std::endl;
+    }
+    else
+        std::cout << "Problem was unsolvable\n";
+ */
+
+    timer.start();
+    State *e = BestFS(a, examined, mem);
+    timer.stop();
+    double ms = timer.getElapsedMicroSeconds();
+
+    if (e!=nullptr) {
+        std::cout << "BestFS\n";
+        std::cout << "Solution found with:\n" << "  Solution depth = " << e->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms << " microseconds." <<std::endl;
+    }
+    else {
+        std::cout << "Problem was unsolvable\n";
+        std::cout << examined << " " << mem;
+    }
+
+
 }

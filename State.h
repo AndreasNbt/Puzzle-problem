@@ -36,16 +36,30 @@ class State {
         void swapPieces(int x1, int y1, int x2, int y2);
         bool isFinal();
         [[nodiscard]] long int getKey() const;
+        int getDepth();
+        int heuristic();
+        int getHvalue() const;
+        void setHvalue(int value);
+        void find(int value, int &x, int &y);
     private:
         int puzzle2d[WIDTH][HEIGHT]{};
         int bX, bY;
-        State *prev{};
+        State *prev;
         std::string actionName;
+        int Hvalue;
 
     public:
         void printPuzzle();
 
 };
 
+class myComparator
+{
+public:
+    int operator() (State *s1 , State *s2) const
+    {
+        return s1->getHvalue()>s2->getHvalue();
+    }
+};
 
 #endif //__STATE_H

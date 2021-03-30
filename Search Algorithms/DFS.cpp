@@ -22,12 +22,7 @@ State* DFS(State *initial,unsigned long long &examined,unsigned long long &mem) 
             for (auto x : children)
                 if (closed.count(x->getKey()) ==0)
                     frontier.push(x);
-
-        }
-        else {
-            std::cout << "Found" << std::endl;
         }
     }
-    std::cout << "DE VRIKE LYSI GAMO TO XRISTO";
     return nullptr;
 }
