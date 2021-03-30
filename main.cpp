@@ -42,10 +42,22 @@ int main() {
         std::cout << "BestFS\n";
         std::cout << "Solution found with:\n" << "  Solution depth = " << e->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms2 << " microseconds." <<std::endl;
     }
-    else {
+    else
         std::cout << "Problem was unsolvable\n";
-        std::cout << examined << " " << mem;
-    }
 
+
+    std::cout << "============\n";
+
+    timer.start();
+    State *f = Astar(a, examined, mem);
+    timer.stop();
+    double ms3 = timer.getElapsedMicroSeconds();
+
+    if (f!=nullptr) {
+        std::cout << "A*\n";
+        std::cout << "Solution found with:\n" << "  Solution depth = " << f->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms3 << " microseconds." <<std::endl;
+    }
+    else
+        std::cout << "Problem was unsolvable\n";
 
 }
