@@ -17,7 +17,7 @@ int main() {
     unsigned long long mem;
 
     Timer timer;
-   /* timer.start();
+    timer.start();
     State *d = BFS(a, examined, mem);
     timer.stop();
     double ms = timer.getElapsedMicroSeconds();
@@ -29,16 +29,18 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
- */
+
+
+    std::cout << "============\n";
 
     timer.start();
     State *e = BestFS(a, examined, mem);
     timer.stop();
-    double ms = timer.getElapsedMicroSeconds();
+    double ms2 = timer.getElapsedMicroSeconds();
 
     if (e!=nullptr) {
         std::cout << "BestFS\n";
-        std::cout << "Solution found with:\n" << "  Solution depth = " << e->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms << " microseconds." <<std::endl;
+        std::cout << "Solution found with:\n" << "  Solution depth = " << e->getDepth() << ",\n  Maximum states stored in memory: " << mem << ",\n  States examined: " << examined << ",\n  In "<< ms2 << " microseconds." <<std::endl;
     }
     else {
         std::cout << "Problem was unsolvable\n";

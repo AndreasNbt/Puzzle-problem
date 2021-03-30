@@ -232,23 +232,32 @@ int State::getDepth() {
 }
 
 int State::heuristic() {
-    int mDistance = 0;
-    int correctPieces = 0;
+    int outofRow = 0;
+    int outofColumn = 0;
     for (int i=0;i<WIDTH;i++)
         for (int j=0;j<HEIGHT;j++) {
             int x,y;
-            if ((i!=WIDTH-1) && (j!=HEIGHT-1))
-                find(i*WIDTH + j + 1, x , y);
-            if (puzzle2d[i][j] == i*WIDTH + j + 1) correctPieces++;
-            else {
-                x = bX;
-                y = bY;
-                if (!puzzle2d[i][j]) correctPieces++;
+            if (!(i==WIDTH-1 && j==HEIGHT-1)) {
+                find(i * WIDTH + j + 1, x, y);
+                if (i != x) outofRow++;
+                if (j != y) outofColumn++;
             }
-            mDistance += sqrt((i-x)*(i-x) + (j-y)*(j-y));
         }
-    return mDistance - correctPieces;
+    return outofRow + outofColumn;
 }
+
+/*
+int State::heuristic() {
+    int mDistance = 0;
+    int correctPieces = 0;
+    for (int i=0;i<WIDTH;i++)
+        for (int j=0;j<HEIGHT;j++)
+            if ((i!=WIDTH-1) && (j!=HEIGHT-1))
+                if (puzzle2d[i][j] == i*WIDTH + j +1)
+                    correctPieces++;
+    return correctPieces;
+}
+*/
 
 int State::getHvalue() const {
     return Hvalue;

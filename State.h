@@ -38,7 +38,7 @@ class State {
         [[nodiscard]] long int getKey() const;
         int getDepth();
         int heuristic();
-        int getHvalue() const;
+        [[nodiscard]] int getHvalue() const;
         void setHvalue(int value);
         void find(int value, int &x, int &y);
     private:
