@@ -13,7 +13,7 @@
 class State {
     public:
         State();
-        State(const int *puzzle,int x, int y);
+        explicit State(const int *puzzle);
         State(const State&) = default;
         ~State() = default;
         State(State&&) = default;
@@ -46,7 +46,7 @@ class State {
         int bX, bY;
         State *prev;
         std::string actionName;
-        int Hvalue;
+        int Hvalue{};
 
     public:
         void printPuzzle();

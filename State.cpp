@@ -1,7 +1,6 @@
 #include "State.h"
-
 #include <random>
-#include <math.h>
+
 
 
 State::State() {
@@ -20,18 +19,21 @@ State::State() {
                bY = j;
            }
        }
-   setPrev(nullptr);
-   setActionName("");
+    prev = nullptr;
+    actionName = "";
 }
 
-State::State(const int *puzzle, int x, int y) {
+State::State(const int *puzzle) {
     for (int i=0;i<WIDTH;i++)
-        for (int j = 0; j < HEIGHT; j++)
+        for (int j = 0; j < HEIGHT; j++) {
             puzzle2d[i][j] = puzzle[i*WIDTH+j];
-    bX = x;
-    bY = y;
-    setPrev(nullptr);
-    setActionName("");
+            if (!(puzzle2d[i][j])) {
+                bX = i;
+                bY = j;
+            }
+        }
+    prev = nullptr;
+    actionName = "";
 }
 
 
@@ -211,8 +213,8 @@ bool State::operator==(const State &other) {
 
 long int State::getKey() const {
     long int k = bX * 1000 + bY *10;
-    for (int i = 0;i<WIDTH;i++) {
-        int t = 1;
+    int t = 1;
+    for (int i = 0;i < WIDTH; i++) {
         for (int j = 0; j < HEIGHT; j++) {
             k += (puzzle2d[i][j] * t);
             t *= 10;
@@ -228,36 +230,23 @@ int State::getDepth() {
         depth ++;
         p = p->prev;
     }
-    return depth;
+    return depth-1;
 }
 
 int State::heuristic() {
-    int outofRow = 0;
-    int outofColumn = 0;
+    int outOfRow = 0;
+    int outOfColumn = 0;
     for (int i=0;i<WIDTH;i++)
         for (int j=0;j<HEIGHT;j++) {
             int x,y;
             if (!(i==WIDTH-1 && j==HEIGHT-1)) {
                 find(i * WIDTH + j + 1, x, y);
-                if (i != x) outofRow++;
-                if (j != y) outofColumn++;
+                if (i != x) outOfRow++;
+                if (j != y) outOfColumn++;
             }
         }
-    return outofRow + outofColumn;
+    return outOfRow + outOfColumn;
 }
-
-/*
-int State::heuristic() {
-    int mDistance = 0;
-    int correctPieces = 0;
-    for (int i=0;i<WIDTH;i++)
-        for (int j=0;j<HEIGHT;j++)
-            if ((i!=WIDTH-1) && (j!=HEIGHT-1))
-                if (puzzle2d[i][j] == i*WIDTH + j +1)
-                    correctPieces++;
-    return correctPieces;
-}
-*/
 
 int State::getHvalue() const {
     return Hvalue;
