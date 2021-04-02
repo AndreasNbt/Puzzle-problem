@@ -1,3 +1,5 @@
+// Implementation of the Timer class
+
 #include "Timer.h"
 
 void Timer::start() {

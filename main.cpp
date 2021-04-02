@@ -1,3 +1,6 @@
+// In this file, all the search algorithms are called and the results are printed on the console.
+
+
 #include <iostream>
 #include "State.h"
 #include "Timer.h"
@@ -28,7 +31,7 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
-    std::cout << examined << "\n" << mem << std::endl;
+
 
 
     std::cout << "============\n";
@@ -44,7 +47,7 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
-    std::cout << examined << "\n" << mem << std::endl;
+
 
     std::cout << "============\n";
 
@@ -59,7 +62,7 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
-    std::cout << examined << "\n" << mem << std::endl;
+
 
     std::cout << "============\n";
 
@@ -74,5 +77,5 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
-    std::cout << examined << "\n" << mem << std::endl;
+
 }

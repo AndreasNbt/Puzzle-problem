@@ -1,3 +1,5 @@
+// Implementation of the State class
+
 #include "State.h"
 #include <random>
 
@@ -34,16 +36,6 @@ State::State(const int *puzzle) {
         }
     prev = nullptr;
     actionName = "";
-}
-
-
-void State::printPuzzle() {
-    for (auto & i : puzzle2d) {
-        for (int j : i) {
-            std::cout << j << " ";
-        }
-        std::cout << "\n";
-    }
 }
 
 int State::getbX() const {

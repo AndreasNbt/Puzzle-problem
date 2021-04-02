@@ -1,3 +1,5 @@
+// The DFS algorithm.
+
 #include "../State.h"
 
 State* DFS(State *initial,unsigned long long &examined,unsigned long long &mem) {

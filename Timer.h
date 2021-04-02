@@ -1,3 +1,5 @@
+// A simple Timer so I can count how much time each search algorithm takes to solve the puzzle.
+
 #ifndef __TIMER_H
 #define __TIMER_H
 

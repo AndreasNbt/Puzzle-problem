@@ -1,3 +1,6 @@
+// Modeling of the 8-puzzle problem
+// Every instance of the class represents a different State of the puzzle.
+
 #ifndef __STATE_H
 #define __STATE_H
 #include <iostream>
@@ -47,10 +50,6 @@ class State {
         State *prev;
         std::string actionName;
         int Hvalue{};
-
-    public:
-        void printPuzzle();
-
 };
 
 class myComparator
