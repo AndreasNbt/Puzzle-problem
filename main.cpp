@@ -12,7 +12,7 @@ State* Astar(State *initial,unsigned long long &examined,unsigned long long &mem
 
 
 int main() {
-    int b[WIDTH*HEIGHT] = {3,6,8,2,1,0,7,4,5};
+    int b[WIDTH*HEIGHT] = {3,6,0,1,4,2,7,5,8};
     auto *a = new State(b);
 
     unsigned long long examined;
@@ -77,5 +77,4 @@ int main() {
     }
     else
         std::cout << "Problem was unsolvable\n";
-
 }

@@ -44,6 +44,7 @@ class State {
         [[nodiscard]] int getHvalue() const;
         void setHvalue(int value);
         void find(int value, int &x, int &y);
+        friend std::ostream & operator<<(std::ostream &, const State &);
     private:
         int puzzle2d[WIDTH][HEIGHT]{};
         int bX, bY;

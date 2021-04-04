@@ -257,4 +257,18 @@ void State::find(int value, int &x, int &y) {
             }
     }
 
+std::ostream & operator<<(std::ostream &stream,const State &a)
+{
+    std::string s="";
 
+    s= a.getActionName();
+    State *p=a.getPrev();
+
+    while (p!=nullptr)
+    {
+        s = p->getActionName()+" "+s;
+        p = p->getPrev();
+    }
+    stream <<s;
+    return stream;
+}
